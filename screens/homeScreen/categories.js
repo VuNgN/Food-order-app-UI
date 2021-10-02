@@ -19,13 +19,11 @@ export default ({ category }) => {
         loadFonts()
     });
     return fontsLoaded ? (
-        <TouchableOpacity style={styles.shadow} activeOpacity={0.7}>
-            <View style={[styles.container, { backgroundColor: category.selected ? colors.primary : colors.white }]}>
-                <Image style={styles.image} source={category.image} />
-                <Text style={styles.title}>{category.title}</Text>
-                <View style={[styles.icon, { backgroundColor: category.selected ? colors.white : colors.secondary }]}>
-                    <FontAwesome5 name='chevron-right' color={category.selected ? colors.black : colors.white} size={5, 8} />
-                </View>
+        <TouchableOpacity style={[styles.container, { backgroundColor: category.selected ? colors.primary : colors.white }]} activeOpacity={0.7}>
+            <Image style={styles.image} source={category.image} />
+            <Text style={styles.title}>{category.title}</Text>
+            <View style={[styles.icon, { backgroundColor: category.selected ? colors.white : colors.secondary }]}>
+                <FontAwesome5 name='chevron-right' color={category.selected ? colors.black : colors.white} size={8} />
             </View>
         </TouchableOpacity>
     ) : null;
@@ -36,15 +34,8 @@ const styles = StyleSheet.create({
         backgroundColor: colors.primary,
         borderRadius: 20,
         width: 105,
-        height: 180,
         alignItems: 'center',
-    },
-    shadow: {
-        backgroundColor: '#fff',
         marginRight: 20,
-        borderRadius: 20,
-        width: 105,
-        height: 180,
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
@@ -52,8 +43,8 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
-
         elevation: 5,
+        marginBottom: 5,
     },
     image: {
         height: 60,

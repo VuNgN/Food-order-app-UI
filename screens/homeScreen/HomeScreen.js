@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Image, TextInput, SafeAreaView, FlatList, StyleSheet } from "react-native";
+import { View, Text, Image, TextInput, ScrollView, SafeAreaView, FlatList, StyleSheet } from "react-native";
 import colors from '../../assets/colors/colors';
 import Feather from 'react-native-vector-icons/Feather'
 import * as Font from 'expo-font';
@@ -10,8 +10,10 @@ import Popular from './populars'
 
 
 export default () => {
+    const searchBorderBottomScrollY = 60;
     const [searchValueInput, onChangeSearchValue] = useState(null);
     const [fontsLoaded, setFontsLoaded] = useState(false);
+    const [isScrollingDown, setIsScrollingDown] = useState(false);
     useEffect(() => {
         async function loadFonts() {
             await Font.loadAsync({
@@ -33,47 +35,62 @@ export default () => {
         }
         loadFonts()
     });
+    const onScrolling = (e) => {
+        setIsScrollingDown(e.nativeEvent.contentOffset.y > searchBorderBottomScrollY 
+            ? true : false);
+    };
     return fontsLoaded ? (
         <View style={styles.container}>
-            <SafeAreaView style={styles.header}>
-                <Image style={styles.profileImg} source={require('../../assets/images/profile.png')} />
-                <Feather style={styles.menuIcon} name='menu' color={colors.darkText} size={24} />
-            </SafeAreaView>
-            <Text style={styles.headerText}>Food</Text>
-            <Text style={styles.h1Title}>Delivery</Text>
-            <View style={styles.searchWrapper}>
-                <Feather style={styles.searchIcon} name='search' color={colors.darkText} size={16} />
-                <TextInput
-                    style={styles.searchInput}
-                    onChangeText={onChangeSearchValue}
-                    value={searchValueInput}
-                    placeholder=' Search...'
-                    placeholderTextColor={colors.lightText}
-                />
+            <View 
+                style={{ 
+                    borderBottomWidth: isScrollingDown ? 1 : 0,
+                    borderBottomColor: isScrollingDown ? colors.darkText : 'none',
+                    paddingBottom: 10,
+                }}
+            >
+                <SafeAreaView style={styles.header}>
+                    <Image style={styles.profileImg} source={require('../../assets/images/profile.png')} />
+                    <Feather style={styles.menuIcon} name='menu' color={colors.darkText} size={24} />
+                </SafeAreaView>
+                <Text style={styles.headerText}>Food</Text>
+                <Text style={styles.h1Title}>Delivery</Text>
             </View>
-            <View style={styles.categoryWrapper}>
-                <Text style={styles.h2Title}>Categories</Text>
-                <FlatList
-                    style={styles.categories}
-                    data={categoriesData}
-                    renderItem={({ item }) => <Categories category={item} key={item.id} />}
-                    keyExtractor={item => item.id}
-                    horizontal
-                    showsVerticalScrollIndicator={false}
-                    showsHorizontalScrollIndicator={false}
-                />
-            </View>
-            <View style={styles.popularWrapper}>
-                <Text style={styles.h2Title}>Popular</Text>
-                <FlatList
-                    style={styles.popular}
-                    data={popularsData}
-                    renderItem={({ item }) => <Popular category={item} key={item.id} />}
-                    keyExtractor={item => item.id}
-                    showsVerticalScrollIndicator={false}
-                    showsHorizontalScrollIndicator={false}
-                />
-            </View>
+            <ScrollView 
+                showsVerticalScrollIndicator={false} 
+                onScroll={onScrolling}
+            >
+                <View style={styles.searchWrapper}>
+                    <Feather style={styles.searchIcon} name='search' color={colors.darkText} size={16} />
+                    <TextInput
+                        style={styles.searchInput}
+                        onChangeText={onChangeSearchValue}
+                        value={searchValueInput}
+                        placeholder=' Search...'
+                        placeholderTextColor={colors.lightText}
+                    />
+                </View>
+                <View style={styles.categoryWrapper}>
+                    <Text style={styles.h2Title}>Categories</Text>
+                    <FlatList
+                        style={styles.categories}
+                        data={categoriesData}
+                        renderItem={({ item }) => <Categories category={item} key={item.id} />}
+                        keyExtractor={item => item.id}
+                        horizontal
+                        showsVerticalScrollIndicator={false}
+                        showsHorizontalScrollIndicator={false}
+                    />
+                </View>
+                <View style={styles.popularWrapper}>
+                    <Text style={styles.h2Title}>Popular</Text>
+                    <View style={styles.popular}>
+                        {
+                            popularsData.map(( item ) => < Popular product={item} key={item.id}/>)
+                        }
+                    </View>
+                    
+                </View>
+            </ScrollView>
         </View>
     ) : null;
 }
@@ -110,7 +127,7 @@ const styles = StyleSheet.create({
         fontSize: 32,
     },
     searchWrapper: {
-        marginTop: 36,
+        marginTop: 25,
         flexDirection: 'row',
         alignItems: 'baseline',
         marginBottom: 10,
@@ -126,7 +143,7 @@ const styles = StyleSheet.create({
         fontSize: 14,
     },
     categoryWrapper: {
-        
+        marginBottom: -5
     },
     h2Title: {
         marginTop: 20,
@@ -139,6 +156,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,     
     },
     popular: {
-
+        marginTop: 10,
+        marginHorizontal: 2,
     }
 })
