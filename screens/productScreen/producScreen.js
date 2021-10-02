@@ -78,8 +78,8 @@ export default ({ route, navigation }) => {
                 onPress={() => 
                     { 
                         Alert.alert(
-                            'Notification', 
                             'Ordered !', 
+                            'Bon Appétit', 
                             [
                                 {
                                     text: "OK" 
