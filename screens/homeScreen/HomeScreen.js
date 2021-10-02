@@ -57,6 +57,7 @@ export default () => {
             </View>
             <ScrollView 
                 showsVerticalScrollIndicator={false} 
+                scrollEventThrottle={16}
                 onScroll={onScrolling}
             >
                 <View style={styles.searchWrapper}>
