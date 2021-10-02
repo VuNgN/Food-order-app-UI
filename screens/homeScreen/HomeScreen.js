@@ -9,7 +9,7 @@ import Categories from './categories';
 import Popular from './populars'
 
 
-export default () => {
+export default ({ navigation }) => {
     const searchBorderBottomScrollY = 60;
     const [searchValueInput, onChangeSearchValue] = useState(null);
     const [fontsLoaded, setFontsLoaded] = useState(false);
@@ -86,7 +86,15 @@ export default () => {
                     <Text style={styles.h2Title}>Popular</Text>
                     <View style={styles.popular}>
                         {
-                            popularsData.map(( item ) => < Popular product={item} key={item.id}/>)
+                            popularsData.map(( item ) => 
+                                < Popular 
+                                    product={item} 
+                                    onPress={() => 
+                                        navigation.navigate('Product', 
+                                        { product: item })
+                                    } 
+                                    key={item.id}
+                                />)
                         }
                     </View>
                     

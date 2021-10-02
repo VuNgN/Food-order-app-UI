@@ -4,7 +4,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import colors from '../../assets/colors/colors'
 import * as Font from 'expo-font';
 
-export default ({ product }) => {
+export default ({ product, onPress }) => {
     const [fontsLoaded, setFontsLoaded] = useState(false);
     useEffect(() => {
         async function loadFonts() {
@@ -23,7 +23,11 @@ export default ({ product }) => {
         loadFonts()
     });
     return fontsLoaded ? (
-        <TouchableOpacity style={styles.container} activeOpacity={0.7}>
+        <TouchableOpacity 
+            style={styles.container} 
+            activeOpacity={0.7}
+            onPress={onPress}
+        >
             <View style={styles.cartWrapper}>
                 <View>
                     <View style={styles.trending}>
