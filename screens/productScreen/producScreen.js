@@ -5,7 +5,6 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import * as Font from 'expo-font';
 import Ingredients from './ingredients';
 
-
 export default ({ route, navigation }) => {
     const searchBorderBottomScrollY = 60;
     const [fontsLoaded, setFontsLoaded] = useState(false);
