@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Image, TouchableOpacity, ScrollView, SafeAreaView, FlatList, StyleSheet } from "react-native";
+import { View, Text, Image, TouchableOpacity, SafeAreaView, FlatList, ScrollView, StyleSheet, Alert } from "react-native";
 import colors from '../../assets/colors/colors';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import * as Font from 'expo-font';
-import popularsData from '../../assets/data/popularsData';
+import Ingredients from './ingredients';
 
 
-export default ({ route }) => {
+export default ({ route, navigation }) => {
     const [fontsLoaded, setFontsLoaded] = useState(false);
     useEffect(() => {
         async function loadFonts() {
@@ -30,9 +30,16 @@ export default ({ route }) => {
     });
     const { product } = route.params;
     return fontsLoaded ? (
-        <View style={styles.container}>
+        <ScrollView 
+            style={styles.container}
+            showsHorizontalScrollIndicator={false}
+        >
             <SafeAreaView style={styles.header}>
-                <TouchableOpacity style={styles.backButton} activeOpacity={0.7}>
+                <TouchableOpacity
+                    style={styles.backButton}
+                    activeOpacity={0.7}
+                    onPress={() => navigation.goBack()}
+                >
                     <MaterialCommunityIcons name='chevron-left' color={colors.darkText} size={15} />
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.starButton} activeOpacity={0.7}>
@@ -45,16 +52,47 @@ export default ({ route }) => {
                 <View style={styles.description}>
                     <Text style={styles.descriptionTitle}>Size</Text>
                     <Text style={styles.descriptionContent}>{product.sizeName} {product.sizeNumber}"</Text>
-                    <Text style={[styles.descriptionTitle, {marginTop:20}]}>Crust</Text>
+                    <Text style={[styles.descriptionTitle, { marginTop: 20 }]}>Crust</Text>
                     <Text style={styles.descriptionContent}>{product.crust}</Text>
-                    <Text style={[styles.descriptionTitle, {marginTop:20}]}>Delivery in</Text>
+                    <Text style={[styles.descriptionTitle, { marginTop: 20 }]}>Delivery in</Text>
                     <Text style={styles.descriptionContent}>{product.deliveryTime} min</Text>
                 </View>
                 <View style={styles.imageWrapper}>
                     <Image style={styles.image} source={product.image} />
                 </View>
             </View>
-        </View>
+            <View style={styles.ingredientsWrapper}>
+                <Text style={styles.ingredientsText}>Ingredients</Text>
+                <FlatList
+                    style={styles.ingredients}
+                    data={product.ingredients}
+                    renderItem={({ item }) => <Ingredients ingredient={item} key={item.id} />}
+                    keyExtractor={item => item.id}
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                />
+            </View>
+            <TouchableOpacity 
+                style={styles.orderButton} 
+                activeOpacity={0.7} 
+                onPress={() => 
+                    { 
+                        Alert.alert(
+                            'Notification', 
+                            'Ordered !', 
+                            [
+                                {
+                                    text: "OK" 
+                                }
+                            ]
+                        ) 
+                    }
+                }
+            >
+                <Text style={styles.orderText}>Place an order</Text>
+                <MaterialCommunityIcons style={styles.orderIcon} name='chevron-right' color={colors.darkText} size={20} />
+            </TouchableOpacity>
+        </ScrollView>
     ) : null;
 }
 
@@ -67,7 +105,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         marginTop: 60,
         alignItems: 'center',
-        paddingHorizontal: 20,
+        marginHorizontal: 20,
     },
     backButton: {
         height: 40,
@@ -130,5 +168,37 @@ const styles = StyleSheet.create({
         width: 295,
         height: 175,
         resizeMode: 'contain',
+    },
+    ingredientsWrapper: {
+        marginTop: 45,
+    },
+    ingredientsText: {
+        marginLeft: 20,
+        fontFamily: 'Montserrat-Bold',
+        fontSize: 16,
+        color: colors.darkText,
+    },
+    ingredients: {
+        marginTop: 20,
+    },
+    orderButton: {
+        flexDirection: 'row',
+        width: 330,
+        height: 60,
+        borderRadius: 50,
+        backgroundColor: colors.primary,
+        alignItems: 'center',
+        alignSelf: 'center',
+        justifyContent: 'center',
+        marginVertical: 60,
+    },
+    orderText: {
+        fontFamily: 'Montserrat-Bold',
+        fontSize: 14,
+        color: colors.darkText,
+        marginRight: 10,
+    },
+    orderIcon: {
+        marginTop: 3,
     },
 })
