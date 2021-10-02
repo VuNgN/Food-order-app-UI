@@ -45,6 +45,7 @@ const styles = StyleSheet.create({
         shadowRadius: 3.84,
         elevation: 5,
         marginBottom: 10,
+        marginTop: 5,
     },
     image: {
         height: 60,

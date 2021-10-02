@@ -61,7 +61,7 @@ export default ({ navigation }) => {
                 onScroll={onScrolling}
             >
                 <View style={styles.searchWrapper}>
-                    <Feather style={styles.searchIcon} name='search' color={colors.darkText} size={16} />
+                    <Feather style={styles.searchIcon} name='search' color={colors.darkText} size={20} />
                     <TextInput
                         style={styles.searchInput}
                         onChangeText={onChangeSearchValue}
@@ -82,7 +82,7 @@ export default ({ navigation }) => {
                         showsHorizontalScrollIndicator={false}
                     />
                 </View>
-                <View style={styles.popularWrapper}>
+                <SafeAreaView style={styles.popularWrapper}>
                     <Text style={styles.h2Title}>Popular</Text>
                     <View style={styles.popular}>
                         {
@@ -98,7 +98,7 @@ export default ({ navigation }) => {
                         }
                     </View>
                     
-                </View>
+                </SafeAreaView>
             </ScrollView>
         </View>
     ) : null;
@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
         marginTop: 60,
         alignItems: 'center',
         justifyContent: 'center',
-        paddingHorizontal: 20,
+        marginHorizontal: 20,
     },
     profileImg: {
         height: 40,
@@ -152,7 +152,8 @@ const styles = StyleSheet.create({
         borderBottomWidth: 2,
         flex: 1,
         fontFamily: 'Montserrat-SemiBold',
-        fontSize: 14,
+        fontSize: 18,
+        paddingBottom: 5,
     },
     categoryWrapper: {
         marginBottom: -5,
@@ -164,7 +165,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
     },
     categories: {
-        marginTop: 15,
+        marginTop: 10,
         paddingHorizontal: 20,
     },
     popular: {

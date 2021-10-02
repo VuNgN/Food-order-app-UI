@@ -3,7 +3,7 @@ import { View, Image } from 'react-native';
 import colors from '../../assets/colors/colors';
 
 
-export default ({ ingredient }) => {
+export default ({ ingredient, index }) => {
     return (
         <View style={{
             width: 100,
@@ -19,9 +19,10 @@ export default ({ ingredient }) => {
             shadowRadius: 2.22,
             elevation: 3,
             marginBottom: 5,
+            marginTop: 2,
             alignItems: 'center',
             justifyContent: 'center',
-            marginLeft: ingredient.id === '1' ? 20 : 0,
+            marginLeft: index === 0 ? 20 : 0,
             marginRight: 15,
         }}>
             <Image style={{

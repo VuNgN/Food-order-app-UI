@@ -7,7 +7,13 @@ import Ingredients from './ingredients';
 
 
 export default ({ route, navigation }) => {
+    const searchBorderBottomScrollY = 60;
     const [fontsLoaded, setFontsLoaded] = useState(false);
+    const [isScrollingDown, setIsScrollingDown] = useState(false);
+    const onScrolling = (e) => {
+        setIsScrollingDown(e.nativeEvent.contentOffset.y > searchBorderBottomScrollY 
+            ? true : false);
+    };
     useEffect(() => {
         async function loadFonts() {
             await Font.loadAsync({
@@ -30,10 +36,7 @@ export default ({ route, navigation }) => {
     });
     const { product } = route.params;
     return fontsLoaded ? (
-        <ScrollView 
-            style={styles.container}
-            showsHorizontalScrollIndicator={false}
-        >
+        <View style={styles.container}>
             <SafeAreaView style={styles.header}>
                 <TouchableOpacity
                     style={styles.backButton}
@@ -46,53 +49,61 @@ export default ({ route, navigation }) => {
                     <MaterialCommunityIcons name='star' color={colors.white} size={15} />
                 </TouchableOpacity>
             </SafeAreaView>
-            <Text style={styles.title}>{product.title}</Text>
-            <Text style={styles.price}>${product.price}</Text>
-            <View style={styles.info}>
-                <View style={styles.description}>
-                    <Text style={styles.descriptionTitle}>Size</Text>
-                    <Text style={styles.descriptionContent}>{product.sizeName} {product.sizeNumber}"</Text>
-                    <Text style={[styles.descriptionTitle, { marginTop: 20 }]}>Crust</Text>
-                    <Text style={styles.descriptionContent}>{product.crust}</Text>
-                    <Text style={[styles.descriptionTitle, { marginTop: 20 }]}>Delivery in</Text>
-                    <Text style={styles.descriptionContent}>{product.deliveryTime} min</Text>
-                </View>
-                <View style={styles.imageWrapper}>
-                    <Image style={styles.image} source={product.image} />
-                </View>
-            </View>
-            <View style={styles.ingredientsWrapper}>
-                <Text style={styles.ingredientsText}>Ingredients</Text>
-                <FlatList
-                    style={styles.ingredients}
-                    data={product.ingredients}
-                    renderItem={({ item }) => <Ingredients ingredient={item} key={item.id} />}
-                    keyExtractor={item => item.id}
-                    horizontal
-                    showsHorizontalScrollIndicator={false}
-                />
-            </View>
-            <TouchableOpacity 
-                style={styles.orderButton} 
-                activeOpacity={0.7} 
-                onPress={() => 
-                    { 
-                        Alert.alert(
-                            'Ordered !', 
-                            'Bon Appétit', 
-                            [
-                                {
-                                    text: "OK" 
-                                }
-                            ]
-                        ) 
-                    }
-                }
+            <ScrollView
+                showsVerticalScrollIndicator={false} 
+                scrollEventThrottle={16}
+                onScroll={onScrolling}
             >
-                <Text style={styles.orderText}>Place an order</Text>
-                <MaterialCommunityIcons style={styles.orderIcon} name='chevron-right' color={colors.darkText} size={20} />
-            </TouchableOpacity>
-        </ScrollView>
+                <Text style={styles.title}>{product.title}</Text>
+                <Text style={styles.price}>${product.price}</Text>
+                <View style={styles.info}>
+                    <View style={styles.description}>
+                        <Text style={styles.descriptionTitle}>Size</Text>
+                        <Text style={styles.descriptionContent}>{product.sizeName} {product.sizeNumber}"</Text>
+                        <Text style={[styles.descriptionTitle, { marginTop: 20 }]}>Crust</Text>
+                        <Text style={styles.descriptionContent}>{product.crust}</Text>
+                        <Text style={[styles.descriptionTitle, { marginTop: 20 }]}>Delivery in</Text>
+                        <Text style={styles.descriptionContent}>{product.deliveryTime} min</Text>
+                    </View>
+                    <View style={styles.imageWrapper}>
+                        <Image style={styles.image} source={product.image} />
+                    </View>
+                </View>
+                <View style={styles.ingredientsWrapper}>
+                    <Text style={styles.ingredientsText}>Ingredients</Text>
+                    <FlatList
+                        style={styles.ingredients}
+                        data={product.ingredients}
+                        renderItem={({ item, index }) => <Ingredients ingredient={item} index={index} key={item.id} />}
+                        keyExtractor={item => item.id}
+                        horizontal
+                        showsHorizontalScrollIndicator={false}
+                    />
+                </View>
+                <SafeAreaView>
+                    <TouchableOpacity 
+                        style={styles.orderButton} 
+                        activeOpacity={0.7} 
+                        onPress={() => 
+                            { 
+                                Alert.alert(
+                                    'Ordered !', 
+                                    'Bon Appétit', 
+                                    [
+                                        {
+                                            text: "OK" 
+                                        }
+                                    ]
+                                ) 
+                            }
+                        }
+                    >
+                        <Text style={styles.orderText}>Place an order</Text>
+                        <MaterialCommunityIcons style={styles.orderIcon} name='chevron-right' color={colors.darkText} size={20} />
+                    </TouchableOpacity>
+                </SafeAreaView>
+            </ScrollView>
+        </View>
     ) : null;
 }
 
@@ -106,6 +117,7 @@ const styles = StyleSheet.create({
         marginTop: 60,
         alignItems: 'center',
         marginHorizontal: 20,
+        marginBottom: 30,
     },
     backButton: {
         height: 40,
@@ -132,7 +144,6 @@ const styles = StyleSheet.create({
         width: '50%',
         color: colors.darkText,
         paddingLeft: 20,
-        marginTop: 30,
     },
     price: {
         fontFamily: 'Montserrat-SemiBold',
@@ -179,7 +190,7 @@ const styles = StyleSheet.create({
         color: colors.darkText,
     },
     ingredients: {
-        marginTop: 20,
+        marginTop: 15,
     },
     orderButton: {
         flexDirection: 'row',
