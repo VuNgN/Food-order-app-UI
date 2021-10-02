@@ -4,7 +4,9 @@ import colors from '../../assets/colors/colors';
 import Feather from 'react-native-vector-icons/Feather'
 import * as Font from 'expo-font';
 import categoriesData from '../../assets/data/categoriesData';
+import popularsData from '../../assets/data/popularsData';
 import Categories from './categories';
+import Popular from './populars'
 
 
 export default () => {
@@ -49,16 +51,29 @@ export default () => {
                     placeholderTextColor={colors.lightText}
                 />
             </View>
-            <Text style={styles.h2Title}>Categories</Text>
-            <FlatList
-                style={styles.categories}
-                data={categoriesData}
-                renderItem={({ item }) => <Categories category={item} key={item.id} />}
-                keyExtractor={item => item.id}
-                horizontal
-                showsVerticalScrollIndicator={false}
-                showsHorizontalScrollIndicator={false}
-            />
+            <View style={styles.categoryWrapper}>
+                <Text style={styles.h2Title}>Categories</Text>
+                <FlatList
+                    style={styles.categories}
+                    data={categoriesData}
+                    renderItem={({ item }) => <Categories category={item} key={item.id} />}
+                    keyExtractor={item => item.id}
+                    horizontal
+                    showsVerticalScrollIndicator={false}
+                    showsHorizontalScrollIndicator={false}
+                />
+            </View>
+            <View style={styles.popularWrapper}>
+                <Text style={styles.h2Title}>Popular</Text>
+                <FlatList
+                    style={styles.popular}
+                    data={popularsData}
+                    renderItem={({ item }) => <Popular category={item} key={item.id} />}
+                    keyExtractor={item => item.id}
+                    showsVerticalScrollIndicator={false}
+                    showsHorizontalScrollIndicator={false}
+                />
+            </View>
         </View>
     ) : null;
 }
@@ -110,6 +125,9 @@ const styles = StyleSheet.create({
         fontFamily: 'Montserrat-SemiBold',
         fontSize: 14,
     },
+    categoryWrapper: {
+        
+    },
     h2Title: {
         marginTop: 20,
         fontFamily: 'Montserrat-Bold',
@@ -118,6 +136,9 @@ const styles = StyleSheet.create({
     categories: {
         marginTop: 15,
         marginHorizontal: -20,
-        paddingHorizontal: 20
+        paddingHorizontal: 20,     
     },
+    popular: {
+
+    }
 })
