@@ -24,34 +24,39 @@ export default ({ product }) => {
     });
     return fontsLoaded ? (
         <TouchableOpacity style={styles.container} activeOpacity={0.7}>
-            <View>
-                <View style={styles.trending}>
-                    <MaterialCommunityIcons name='crown' color={colors.primary} size={12} />
-                    <Text style={styles.trendingTitle}>top of the week</Text>
-                </View>
-                <Text style={styles.title}>{product.title}</Text>
-                <Text style={styles.weight}>Weight {product.weight}</Text>
-                <View style={styles.footer}>
-                    <TouchableOpacity style={styles.addCart} activeOpacity={0.7}>
-                        <MaterialCommunityIcons name='plus' color={colors.darkText} size={15} />
-                    </TouchableOpacity>
-                    <View style={styles.ratingWrapper}>
-                        <MaterialCommunityIcons name='star' color={colors.darkText} size={15} />
-                        <Text style={styles.rating}>{product.rating}</Text>
+            <View style={styles.cartWrapper}>
+                <View>
+                    <View style={styles.trending}>
+                        <MaterialCommunityIcons name='crown' color={colors.primary} size={12} />
+                        <Text style={styles.trendingTitle}>top of the week</Text>
+                    </View>
+                    <Text style={styles.title}>{product.title}</Text>
+                    <Text style={styles.weight}>Weight {product.weight}</Text>
+                    <View style={styles.footer}>
+                        <TouchableOpacity style={styles.addCart} activeOpacity={0.7}>
+                            <MaterialCommunityIcons name='plus' color={colors.darkText} size={15} />
+                        </TouchableOpacity>
+                        <View style={styles.ratingWrapper}>
+                            <MaterialCommunityIcons name='star' color={colors.darkText} size={15} />
+                            <Text style={styles.rating}>{product.rating}</Text>
+                        </View>
                     </View>
                 </View>
+                <View style={styles.popularsImageWrapper}>
+                    <Image style={styles.image} source={product.image} />
+                </View>
             </View>
-            <Image style={styles.image} source={product.image} />
         </TouchableOpacity>
     ) : null;
 }
 
 const styles = StyleSheet.create({
     container: {
-        flexDirection: 'row',
         backgroundColor: colors.white,
         borderRadius: 25,
-        shadowColor: "#000",
+        marginBottom: 20,
+        alignItems: 'center',
+        shadowColor: colors.black,
         shadowOffset: {
             width: 0,
             height: 2,
@@ -59,9 +64,14 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
         elevation: 5,
-        marginBottom: 20,
+    },
+    cartWrapper: {
+        flexDirection: 'row',
+        backgroundColor: colors.white,
+        borderRadius: 25,
         alignItems: 'center',
         overflow: 'hidden',
+        width: '100%',
     },
     trending: {
         flexDirection: 'row',
@@ -115,10 +125,12 @@ const styles = StyleSheet.create({
         color: colors.darkText,
         marginLeft: 5,
     },
+    popularsImageWrapper: {
+        marginLeft: 40,
+    },
     image: {
         height: 125,
         width: 210,
-        resizeMode: 'stretch',
-        marginLeft: 20,
+        resizeMode: 'contain',
     }
 });

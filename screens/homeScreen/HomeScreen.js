@@ -43,7 +43,7 @@ export default () => {
         <View style={styles.container}>
             <View 
                 style={{ 
-                    borderBottomWidth: isScrollingDown ? 1 : 0,
+                    borderBottomWidth: isScrollingDown ? 2 : 0,
                     borderBottomColor: isScrollingDown ? colors.darkText : 'none',
                     paddingBottom: 10,
                 }}
@@ -99,13 +99,13 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: colors.white,
         flex: 1,
-        paddingHorizontal: 20,
     },
     header: {
         flexDirection: 'row',
         marginTop: 60,
         alignItems: 'center',
         justifyContent: 'center',
+        paddingHorizontal: 20,
     },
     profileImg: {
         height: 40,
@@ -120,17 +120,20 @@ const styles = StyleSheet.create({
         marginTop: 30,
         fontFamily: 'Montserrat-Regular',
         fontSize: 16,
+        paddingHorizontal: 20,
     },
     h1Title: {
         marginTop: 5,
         fontFamily: 'Montserrat-Bold',
         fontSize: 32,
+        paddingHorizontal: 20,
     },
     searchWrapper: {
         marginTop: 25,
         flexDirection: 'row',
         alignItems: 'baseline',
         marginBottom: 10,
+        paddingHorizontal: 20,
     },
     searchIcon: {
         marginRight: 10,
@@ -143,20 +146,21 @@ const styles = StyleSheet.create({
         fontSize: 14,
     },
     categoryWrapper: {
-        marginBottom: -5
+        marginBottom: -5,
     },
     h2Title: {
         marginTop: 20,
         fontFamily: 'Montserrat-Bold',
         fontSize: 16,
+        paddingHorizontal: 20,
     },
     categories: {
         marginTop: 15,
-        marginHorizontal: -20,
-        paddingHorizontal: 20,     
+        paddingHorizontal: 20,
     },
     popular: {
         marginTop: 10,
+        paddingHorizontal: 20,
         marginHorizontal: 2,
     }
 })
