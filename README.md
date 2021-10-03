@@ -1,4 +1,4 @@
-# food-order-app
+# Food-order-app
 This project is built with React Native 
 
 ## Expo snack
