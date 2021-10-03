@@ -17,7 +17,6 @@ export default ({ navigation }) => {
     useEffect(() => {
         async function loadFonts() {
             await Font.loadAsync({
-                // Any string can be used as the fontFamily name. Here we use an object to provide more control
                 'Montserrat-Regular': {
                     uri: require('../../assets/fonts/Montserrat-Regular.ttf'),
                     display: Font.FontDisplay.FALLBACK,
